@@ -7,6 +7,10 @@ addEventListener("scheduled", (event) => {
   event.waitUntil(handleSchedule(event));
 });
 
+// suffix .endrun.in
+const PROD_HOST = "endrun.in";
+const PROD_PAGES_HOST = "https://website-17wg.pages.dev";
+
 async function handleFetch(request) {
   const url = new URL(request.url);
   const branch = url.hostname.replace(ENV_HOSTNAME_SUFFIX, "");
@@ -14,6 +18,13 @@ async function handleFetch(request) {
 
   if (!kvBranches) {
     return new Response("waiting for first CRON Trigger to load branches data");
+  }
+
+  if(url.hostname === PROD_HOST) {
+    return fetch(
+      PROD_PAGES_HOST + url.pathname + url.search,
+      request
+    );
   }
 
   if (kvBranches[branch]) {

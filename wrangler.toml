@@ -1,0 +1,15 @@
+name = "endrun-in-lanes"
+type = "javascript"
+workers_dev = true
+
+account_id = "b58c346034f78e987facb6829f50f0a2"
+
+vars = {ENV_ACCOUNT_ID = "b58c346034f78e987facb6829f50f0a2", ENV_PAGES_ID = "website", ENV_HOSTNAME_SUFFIX = ".endrun.in"}
+
+# wrangler kv:namespace create KV_PAGES_BRANCH_PREVIEW
+kv_namespaces = [
+  { binding = "KV_PAGES_BRANCH_PREVIEW", id = "87b505e52c374b87ad47dda626d486a8", preview_id = "5852640fc98748a4a44e15e461362d28" },
+]
+
+[triggers]
+crons = ["*/2 * * * *"] # every 2 minutes fits to a Workers + KV free tier
